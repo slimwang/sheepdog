@@ -1,5 +1,7 @@
 import traceback
+import requests
 from weiboSpider.weiboSpider import Weibo
+from lxml import etree
 from db import DB
 
 
@@ -40,6 +42,17 @@ class Spider(Weibo):
         except Exception as e:
             print("Error: ", e)
             traceback.print_exc()
+
+    # 爬取最新微博
+    def get_newest_weibo(self):
+        page = 1
+        url2 = "https://weibo.cn/u/%d?filter=%d&page=%d" % (
+            self.user_id, self.filter, page)
+        html2 = requests.get(url2, cookies=self.cookie).content
+        selector2 = etree.HTML(html2)
+        info = selector2.xpath("//div[@class='c']")
+        self.get_weibo_content(info[0])
+        return self.weibo_content
 
     # 运行爬虫
     def start(self):

@@ -63,9 +63,9 @@ class DB:
         person = Person.get(Person.user_id == user_id)
         return person
 
-    def store_weibo(self, weibo_content, weibo_place, publish_time, up_num, retweet_num, comment_num, publish_tool, is_original):
+    def store_weibo(self, weibo_content, weibo_place, publish_time, up_num, retweet_num, comment_num, publish_tool, is_original, *person):
         Weibo.create(
-            person=self.person,
+            person=person or self.person,
             weibo_content=weibo_content,
             weibo_place=weibo_place,
             publish_time=publish_time,

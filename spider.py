@@ -1,5 +1,7 @@
 import traceback
 import requests
+import sys
+import re
 from weiboSpider.weiboSpider import Weibo
 from lxml import etree
 from db import DB
@@ -52,7 +54,46 @@ class Spider(Weibo):
         selector2 = etree.HTML(html2)
         info = selector2.xpath("//div[@class='c']")
         self.get_weibo_content(info[0])
-        return self.weibo_content
+        # 微博位置
+        self.get_weibo_place(info[0])
+
+        # 微博发布时间
+        self.get_publish_time(info[0])
+
+        # 微博发布工具
+        self.get_publish_tool(info[0])
+
+        str_footer = info[0].xpath("div")[-1]
+        str_footer = str_footer.xpath("string(.)").encode(
+            sys.stdout.encoding, "ignore").decode(sys.stdout.encoding)
+        str_footer = str_footer[str_footer.rfind(u'赞'):]
+        pattern = r"\d+\.?\d*"
+        guid = re.findall(pattern, str_footer, re.M)
+
+        # 点赞数
+        up_num = int(guid[0])
+        self.up_num.append(up_num)
+        print(u"点赞数: " + str(up_num))
+
+        # 转发数
+        retweet_num = int(guid[1])
+        self.retweet_num.append(retweet_num)
+        print(u"转发数: " + str(retweet_num))
+
+        # 评论数
+        comment_num = int(guid[2])
+        self.comment_num.append(comment_num)
+        new_weibo = {
+            "weibo_content": self.weibo_content[0],
+            "weibo_place": self.weibo_place[0],
+            "publish_time": self.publish_time[0],
+            "publish_tool": self.publish_tool[0],
+            "up_num": self.up_num[0],
+            "retweet_num": self.retweet_num[0],
+            "comment_num": self.comment_num[0],
+            "is_original": self.filter,
+        }
+        return new_weibo
 
     # 运行爬虫
     def start(self):

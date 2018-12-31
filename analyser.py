@@ -9,6 +9,7 @@ class Analyser:
     用于情绪值的分析和计算
 
     需要接收一个 user_id 参数来确定是对哪个 Person 进行分析
+    且默认是对所有原创微博进行分析
     """
     def __init__(self, user_id):
         self.db = DB()
@@ -32,3 +33,8 @@ class Analyser:
         mean = pd.Series(sentiments).mean()
         std = pd.Series(sentiments).std()
         self.db.store_mean_and_std(self.person, mean, std)
+
+    def start(self):
+        self.analyse_sentiment_value()
+        self.calculate_mean_and_std()
+        print('分析完毕')

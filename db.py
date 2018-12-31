@@ -32,6 +32,7 @@ class Weibo(Model):
     comment_num = IntegerField()
     publish_tool = CharField()
     is_original = BooleanField()
+    sentiment = IntegerField(default=0)
 
     class Meta:
         database = db
@@ -39,7 +40,7 @@ class Weibo(Model):
 
 class DB:
     def __init__(self):
-        db.connect()
+        db.connect(reuse_if_open=True)
         db.create_tables([Person, Weibo])
 
     def store_person(self, username, user_id, weibo_num, following, followers):
@@ -55,7 +56,7 @@ class DB:
                 followers=followers
             )
 
-    def get_person(user_id):
+    def get_person(self, user_id):
         person = Person.get(Person.user_id == user_id)
         return person
 

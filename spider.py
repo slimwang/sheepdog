@@ -1,5 +1,5 @@
 import traceback
-from weibospider.weiboSpider import Weibo
+from weiboSpider.weiboSpider import Weibo
 from db import DB
 
 

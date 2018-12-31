@@ -31,14 +31,18 @@ class Analyser:
             sentiment_value = self.get_sentiment_value(weibo.weibo_content)
             self.db.store_sentiment(weibo, sentiment_value)
 
-    def calculate_Q1_and_Q3(self):
+    def calculate(self):
         query = Weibo.select().where(Weibo.person == self.person and Weibo.is_original)
         sentiments = [w.sentiment for w in query]
         Q1 = int(pd.Series(sentiments).quantile(.25))
+        Q2 = int(pd.Series(sentiments).quantile(.5))
         Q3 = int(pd.Series(sentiments).quantile(.75))
-        self.db.store_Q1_and_Q3(self.person, Q1, Q3)
+        mean = pd.Series(sentiments).mean()
+        std = pd.Series(sentiments).std()
+        self.db.store_Q1_Q2_Q3(self.person, Q1, Q2, Q3)
+        self.db.store_mean_and_std(self.person, mean, std)
 
     def start(self):
         self.analyse_sentiment_value()
-        self.calculate_Q1_and_Q3()
+        self.calculate()
         print('分析完毕')

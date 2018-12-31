@@ -16,7 +16,10 @@ class Person(Model):
     following = IntegerField()
     followers = IntegerField()
     Q1 = IntegerField(default=0)
+    Q2 = IntegerField(default=0)
     Q3 = IntegerField(default=0)
+    mean = IntegerField(default=0)
+    std = IntegerField(default=0)
 
     class Meta:
         database = db
@@ -77,7 +80,13 @@ class DB:
         weibo.sentiment = sentiment
         weibo.save()
 
-    def store_Q1_and_Q3(self, person, Q1, Q3):
+    def store_Q1_Q2_Q3(self, person, Q1, Q2, Q3):
         person.Q1 = Q1
+        person.Q2 = Q2
         person.Q3 = Q3
+        person.save()
+
+    def store_mean_and_std(self, person, mean, std):
+        person.mean = mean
+        person.std = std
         person.save()

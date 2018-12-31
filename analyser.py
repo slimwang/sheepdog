@@ -34,9 +34,9 @@ class Analyser:
     def calculate_mean_and_std(self):
         query = Weibo.select().where(Weibo.person == self.person and Weibo.is_original)
         sentiments = [w.sentiment for w in query]
-        mean = pd.Series(sentiments).mean()
-        std = pd.Series(sentiments).std()
-        self.db.store_mean_and_std(self.person, mean, std)
+        Q1 = int(pd.Series(sentiments).quantile(.25))
+        Q3 = int(pd.Series(sentiments).quantile(.75))
+        self.db.store_mean_and_std(self.person, Q1, Q3)
 
     def start(self):
         self.analyse_sentiment_value()

@@ -15,6 +15,11 @@ class Analyser:
         self.db = DB()
         self.person = self.db.get_person(user_id)
 
+    def get_sentiment_value(self, content):
+        sentiment = SnowNLP(content).sentiments
+        sentiment_value = round(sentiment * 100)
+        return sentiment_value
+
     def analyse_sentiment_value(self):
         """ 情绪值的计算方法
 
@@ -23,8 +28,7 @@ class Analyser:
         """
         query = Weibo.select().where(Weibo.person == self.person and Weibo.is_original)
         for weibo in query:
-            sentiment = SnowNLP(weibo.weibo_content).sentiments
-            sentiment_value = round(sentiment * 100)
+            sentiment_value = self.get_sentiment_value(weibo.weibo_content)
             self.db.store_sentiment(weibo, sentiment_value)
 
     def calculate_mean_and_std(self):

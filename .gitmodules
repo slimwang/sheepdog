@@ -1,0 +1,3 @@
+[submodule "weiboSpider"]
+	path = weiboSpider
+	url = https://github.com/slimwang/weiboSpider.git

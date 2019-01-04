@@ -14,9 +14,9 @@ def main():
     filter: 值为1时,爬取所有原创微博
     my_cookie: 设置cookie值
     """
-    user_id = 000000000
+    user_id = int(os.environ.get('USER_ID')) or 00000000
     filter = 1
-    my_cookie = "your cookie" # noqa: ignore=E501
+    my_cookie = os.environ.get('COOKIE') or "your_cookie" # noqa: ignore=E501
 
     # 爬取数据
     if not os.path.isfile('weibo.db'):
@@ -42,7 +42,7 @@ def main():
         分析情绪值: 若情绪正常, 则等待, 否则, 发送短信
         """
         # 设置定时器
-        threading.Timer(300, process_newest_weibo).start()
+        threading.Timer(10, process_newest_weibo).start()
 
         # 获取新微博
         new_weibo = spider.get_newest_weibo()
@@ -82,7 +82,12 @@ def main():
                 print('微博状态发生变化, 正在更新数据库...')
                 db = DB()
                 db.person = person
-                db.store_weibo(**new_weibo)
+                weibo.up_num = new_weibo['up_num']
+                weibo.retweet_num = new_weibo['retweet_num']
+                weibo.comment_num = new_weibo['comment_num']
+                weibo.save()
+                print('数据库更新完毕')
+
             print('======无新微博, 当前输出的是最后一条微博======')
 
     process_newest_weibo()

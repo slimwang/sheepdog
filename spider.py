@@ -92,6 +92,7 @@ class Spider(Weibo):
         # 评论数
         comment_num = int(guid[2])
         self.comment_num.append(comment_num)
+        print(u"评论数: " + str(comment_num))
         new_weibo = {
             "weibo_content": self.weibo_content[0],
             "weibo_place": self.weibo_place[0],

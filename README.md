@@ -40,4 +40,4 @@ my_cookie: 设置cookie值
 这里的 `from_` 填的是你从 twilio 里获得的电话号码, 带区号, +1 是美国, +86 是中国, `from_='+152011112222'`, `to` 填入你用来接收短信的手机号.
 
 ### 5. 运行
-    `python3 app.py`
+`python app.py`

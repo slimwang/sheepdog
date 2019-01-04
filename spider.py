@@ -47,6 +47,15 @@ class Spider(Weibo):
 
     # 爬取最新微博
     def get_newest_weibo(self):
+        # 初始化
+        self.weibo_content = []
+        self.weibo_place = []
+        self.publish_time = []
+        self.publish_tool = []
+        self.up_num = []
+        self.retweet_num = []
+        self.comment_num = []
+
         page = 1
         url2 = "https://weibo.cn/u/%d?filter=%d&page=%d" % (
             self.user_id, self.filter, page)

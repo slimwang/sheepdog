@@ -12,6 +12,7 @@ peewee = "*"
 snownlp = "*"
 textblob = "*"
 pandas = "*"
+twilio = "*"
 
 [requires]
 python_version = "3.6"

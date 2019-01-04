@@ -64,7 +64,7 @@ class DB:
         return person
 
     def store_weibo(self, weibo_content, weibo_place, publish_time, up_num, retweet_num, comment_num, publish_tool, is_original, *person):
-        Weibo.create(
+        return Weibo.create(
             person=person or self.person,
             weibo_content=weibo_content,
             weibo_place=weibo_place,
@@ -76,8 +76,8 @@ class DB:
             is_original=is_original,
         )
 
-    def store_sentiment(self, weibo, sentiment):
-        weibo.sentiment = sentiment
+    def store_sentiment(self, weibo, sentiment_value):
+        weibo.sentiment = sentiment_value
         weibo.save()
 
     def store_Q1_Q2_Q3(self, person, Q1, Q2, Q3):

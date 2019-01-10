@@ -42,7 +42,8 @@ def main():
         分析情绪值: 若情绪正常, 则等待, 否则, 发送短信
         """
         # 设置定时器
-        threading.Timer(300, process_newest_weibo).start()
+        timer = threading.Timer(10, process_newest_weibo)
+        timer.start()
 
         # 获取新微博
         new_weibo = spider.get_newest_weibo()

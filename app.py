@@ -1,5 +1,5 @@
 import os
-import threading
+import time
 from spider import Spider
 from analyser import Analyser
 from db import DB
@@ -41,9 +41,6 @@ def main():
                                              若不存在, 则分析其情绪值, 并存入数据库中, 同时更新数据库中的统计数据
         分析情绪值: 若情绪正常, 则等待, 否则, 发送短信
         """
-        # 设置定时器
-        timer = threading.Timer(10, process_newest_weibo)
-        timer.start()
 
         # 获取新微博
         new_weibo = spider.get_newest_weibo()
@@ -91,7 +88,10 @@ def main():
 
             print('======无新微博, 当前输出的是最后一条微博======')
 
-    process_newest_weibo()
+    # 循环爬取最新微博, 并处理
+    while True:
+        process_newest_weibo()
+        time.sleep(300)
 
 
 if __name__ == '__main__':

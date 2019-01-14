@@ -11,6 +11,7 @@ class Analyser:
     需要接收一个 user_id 参数来确定是对哪个 Person 进行分析
     且默认是对所有原创微博进行分析
     """
+
     def __init__(self, user_id):
         self.db = DB()
         self.person = self.db.get_person(user_id)

@@ -16,7 +16,7 @@ def main():
     """
     user_id = int(os.environ.get('USER_ID')) or 00000000
     filter = 1
-    my_cookie = os.environ.get('COOKIE') or "your_cookie" # noqa: ignore=E501
+    my_cookie = os.environ.get('COOKIE') or "your_cookie"  # noqa: ignore=E501
 
     # 爬取数据
     if not os.path.isfile('weibo.db'):
@@ -44,12 +44,14 @@ def main():
 
         # 获取新微博
         new_weibo = spider.get_newest_weibo()
-        query = Weibo.select().where(Weibo.weibo_content == new_weibo["weibo_content"])
+        query = Weibo.select().where(Weibo.weibo_content ==
+                                     new_weibo["weibo_content"])
         # 对新发出的微博进行处理
         if not query.exists():
             print('======发现新微博======')
             analyser = Analyser(user_id)
-            sentiment_value = analyser.get_sentiment_value(new_weibo["weibo_content"])
+            sentiment_value = analyser.get_sentiment_value(
+                new_weibo["weibo_content"])
             # 数据库操作
             db = DB()
             db.person = person

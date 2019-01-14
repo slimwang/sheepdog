@@ -31,13 +31,13 @@ class Spider(Weibo):
             # 写入微博信息
             for i in range(1, self.weibo_num2 + 1):
                 self.db.store_weibo(
-                    weibo_content=self.weibo_content[i-1],
-                    weibo_place=self.weibo_place[i-1],
-                    publish_time=self.publish_time[i-1],
-                    up_num=self.up_num[i-1],
-                    retweet_num=self.retweet_num[i-1],
-                    comment_num=self.comment_num[i-1],
-                    publish_tool=self.publish_tool[i-1],
+                    weibo_content=self.weibo_content[i - 1],
+                    weibo_place=self.weibo_place[i - 1],
+                    publish_time=self.publish_time[i - 1],
+                    up_num=self.up_num[i - 1],
+                    retweet_num=self.retweet_num[i - 1],
+                    comment_num=self.comment_num[i - 1],
+                    publish_tool=self.publish_tool[i - 1],
                     is_original=self.is_original,
                 )
             print(u"微博写入数据库完毕")

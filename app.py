@@ -61,7 +61,7 @@ def main():
             # 更新数据库后, 均值和方差变了, 需要再次更新
             MEAN = Person.get(Person.user_id == user_id).mean
             SD = Person.get(Person.user_id == user_id).std
-            if sentiment_value not in range(MEAN - SD / 2, MEAN + SD / 2):
+            if sentiment_value not in range(MEAN - SD // 2, MEAN + SD // 2):
                 message = '[{person_name}]发了一条[情绪值]为 {sentiment_value} 的微博, 内容为: {content}'.format(
                     person_name=person.username,
                     sentiment_value=sentiment_value,

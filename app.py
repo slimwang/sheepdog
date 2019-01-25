@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime
 from spider import Spider
 from analyser import Analyser
 from db import DB
@@ -46,6 +47,7 @@ def main():
         new_weibo = spider.get_newest_weibo()
         query = Weibo.select().where(Weibo.weibo_content ==
                                      new_weibo["weibo_content"])
+        print(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         # 对新发出的微博进行处理
         if not query.exists():
             print('======发现新微博======')

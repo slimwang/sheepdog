@@ -94,7 +94,10 @@ def main():
 
     # 循环爬取最新微博, 并处理
     while True:
-        process_newest_weibo()
+        try:
+            process_newest_weibo()
+        except Exception as e:
+            print("ERROR: {}".format(e))
         time.sleep(300)
 
 

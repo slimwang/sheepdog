@@ -96,9 +96,10 @@ def main():
     while True:
         try:
             process_newest_weibo()
-        except Exception as e:
-            print("ERROR: {}".format(e))
-        time.sleep(300)
+        except:
+            pass
+        finally:
+            time.sleep(300)
 
 
 if __name__ == '__main__':
